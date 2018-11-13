@@ -5,7 +5,7 @@ json_file = "myface.json"
 hours = 3.5
 
 with open(json_file) as f:
-data = json.load(f)
+  data = json.load(f)
 
 h_rot = math.pi / 6 * hours # hour angle
 m_rot = math.pi * 2 * (hours % 1) # minute angle
