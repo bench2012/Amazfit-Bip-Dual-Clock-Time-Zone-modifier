@@ -1,0 +1,25 @@
+import json
+import math
+
+json_file = "myface.json"
+hours = 3.5
+
+with open(json_file) as f:
+data = json.load(f)
+
+h_rot = math.pi / 6 * hours # hour angle
+m_rot = math.pi * 2 * (hours % 1) # minute angle
+
+# Rotate hours
+shape = data['AnalogDialFace']['Hours']['Shape']
+shape = [ {'Y': round(math.sin(h_rot) * p['X'] + math.cos(h_rot) * p['Y'], 4),
+'X': round(math.cos(h_rot) * p['X'] - math.sin(h_rot) * p['Y'], 4)} for p in shape ]
+data['AnalogDialFace']['Hours']['Shape'] = shape
+
+# Rotate minutes
+shape = data['AnalogDialFace']['Minutes']['Shape']
+shape = [ {'Y': round(math.sin(m_rot) * p['X'] + math.cos(m_rot) * p['Y'], 4),
+'X': round(math.cos(m_rot) * p['X'] - math.sin(m_rot) * p['Y'], 4)} for p in shape ]
+data['AnalogDialFace']['Minutes']['Shape'] = shape
+
+print(json.dumps(data, indent=4))
